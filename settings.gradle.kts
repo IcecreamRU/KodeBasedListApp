@@ -21,4 +21,4 @@ dependencyResolutionManagement {
 
 rootProject.name = "Kode"
 include(":app")
- 
+include(":core:network")
