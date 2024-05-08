@@ -2,9 +2,13 @@ package ru.icecreamru.network.retrofit
 
 import com.icecreamok.kode.data.model.users.UsersResponse
 import kotlinx.serialization.Serializable
+import kotlinx.serialization.json.Json
+import okhttp3.Call
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Header
+import javax.inject.Inject
+import javax.inject.Singleton
 
 
 interface RetrofitNetworkApi {
@@ -22,6 +26,9 @@ private data class NetworkResponse<T>(
     val data: T,
 )
 
-internal class RetrofitKodeNetwork {
+@Singleton
+internal class RetrofitKodeNetwork @Inject constructor(
+    networkJson: Json
+) {
 
 }
