@@ -12,12 +12,16 @@ interface RetrofitNetworkApi {
     suspend fun getUsers(@Header("Prefer") preferHeader: String): Response<UsersResponse>
 }
 
+// TODO: перенести в BuildConfig
+// private const val KODE_BASE_URL = BuildConfig.BACKEND_URL
+private const val KODE_BASE_URL = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/"
+
+
 @Serializable
 private data class NetworkResponse<T>(
     val data: T,
 )
 
-
-class RetrofitKodeNetwork {
+internal class RetrofitKodeNetwork {
 
 }
