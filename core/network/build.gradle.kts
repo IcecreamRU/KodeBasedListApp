@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.hilt) apply false
     kotlin("plugin.serialization")
+    id("kotlin-kapt")
 }
 
 android {
@@ -35,6 +36,9 @@ android {
 }
 
 dependencies {
+    implementation (libs.okhttp3.okhttp)
+    implementation(libs.hilt.android)
+    kapt(libs.hilt.android.compiler)
     implementation(libs.kotlinx.serialization.json)
     implementation(libs.javax.inject)
     implementation(libs.androidx.core.ktx)
