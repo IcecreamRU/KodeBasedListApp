@@ -20,10 +20,12 @@ class MainActivity : ComponentActivity() {
         setContent {
             KodeTheme {
                 Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    Greeting(
-                        name = "Android",
-                        modifier = Modifier.padding(innerPadding)
-                    )
+                    UserScreen(modifier = Modifier.padding(innerPadding))
+//                    UserElement(Person.mock())
+//                    Greeting(
+//                        name = "Android",
+//                        modifier = Modifier.padding(innerPadding)
+//                    )
                 }
             }
         }

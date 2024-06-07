@@ -7,4 +7,5 @@ plugins {
 //    alias(libs.plugins.kotlin.serialization) apply false
 
     kotlin("plugin.serialization") version "1.9.0" apply false
+    alias(libs.plugins.compose.compiler) apply false
 }

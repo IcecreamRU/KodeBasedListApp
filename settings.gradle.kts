@@ -22,3 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Kode"
 include(":app")
 include(":core:network")
+include(":core:data")
+include(":feature:people")
