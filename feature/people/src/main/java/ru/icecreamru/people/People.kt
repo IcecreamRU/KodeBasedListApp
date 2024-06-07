@@ -1,19 +1,25 @@
-package ru.icecreamru.kode
+package ru.icecreamru.people
 
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.heightIn
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Scaffold
 import androidx.compose.material3.ScrollableTabRow
 import androidx.compose.material3.Tab
 import androidx.compose.material3.Text
+import androidx.compose.material3.TextField
+import androidx.compose.material3.TextFieldDefaults
 import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -26,6 +32,7 @@ import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
@@ -36,7 +43,7 @@ import coil.compose.AsyncImage
 import coil.request.ImageRequest
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
-import ru.icecreamru.kode.ui.theme.KodeTheme
+import ru.icecreamru.designsystem.theme.KodeTheme
 import java.util.UUID
 
 // TODO: move to :feature:people
@@ -52,7 +59,7 @@ fun UserElement(person: Person, modifier: Modifier = Modifier) {
                 .data(person.avatarUrl)
                 .crossfade(true)
                 .build(),
-            placeholder = painterResource(R.drawable.ic_launcher_background), //TODO: подставить ic_chicken
+            placeholder = painterResource(R.drawable.ic_chicken),
             contentDescription = null,
             contentScale = ContentScale.Crop,
             modifier = Modifier
@@ -103,7 +110,7 @@ fun UserRow(modifier: Modifier = Modifier) {
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun UserScreen(modifier: Modifier = Modifier) {
+fun UsersContent(modifier: Modifier = Modifier) {
     val scope = rememberCoroutineScope()
     var isRefreshing by rememberSaveable { mutableStateOf(false) }
     PullToRefreshBox(
@@ -121,12 +128,19 @@ fun UserScreen(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun PeopleScreenTest(modifier: Modifier = Modifier) {
-
+fun PeopleScreen() {
+    KodeTheme {
+        Scaffold(
+            topBar = { SearchBar(Modifier.padding(8.dp)) }
+        ) { padding ->
+            Column(modifier = Modifier.padding(padding)) {
+                TabBar()
+                UsersContent()
+            }
+        }
+    }
 }
 
-
-@OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun TabBar(modifier: Modifier = Modifier) {
     var state by remember {
@@ -134,27 +148,63 @@ fun TabBar(modifier: Modifier = Modifier) {
     }
     val titles = listOf("Все", "Designers", "Analysts", "Managers", "iOS", "Android")
     ScrollableTabRow(
-        selectedTabIndex = state, modifier = modifier
+        selectedTabIndex = state,
+        edgePadding = 16.dp,
+        modifier = modifier,
     ) {
         titles.forEachIndexed { index, title ->
+            val style = getStyle(state, index)
+            val color = getColor(state, index)
             Tab(
                 selected = state == index,
                 onClick = { state = index },
-                text = { Text(text = title, maxLines = 1) }
+                text = { Text(text = title, style = style, color = color, fontSize = 15.sp) }
             )
         }
     }
 }
 
 @Composable
-fun SearchBar(modifier: Modifier = Modifier) {
-
+private fun getStyle(state: Int, index: Int) = if (state == index) {
+    MaterialTheme.typography.labelMedium
+} else {
+    MaterialTheme.typography.labelSmall
 }
 
-@Preview
 @Composable
-fun testPreview() {
+private fun getColor(state: Int, index: Int) = if (state == index) {
+    Color.Black
+} else {
+    MaterialTheme.colorScheme.tertiary
+}
 
+@Composable
+fun SearchBar(modifier: Modifier = Modifier) {
+//    Row(modifier = modifier) {
+//        Icon(painterResource(id = R.drawable.ic_search), contentDescription = null)
+//        Icon(painterResource(id = R.drawable.ic_filter), contentDescription = null)
+//    }
+    TextField(
+        value = "",
+        onValueChange = {},
+        leadingIcon = {
+            Icon(painterResource(id = R.drawable.ic_search), contentDescription = null)
+        },
+        placeholder = {
+            Text(text = "Введи имя, тег, почту...")
+        },
+        trailingIcon = {
+            Icon(painterResource(id = R.drawable.ic_filter), contentDescription = null)
+        },
+        shape = RoundedCornerShape(16.dp),
+        colors = TextFieldDefaults.colors(
+            focusedIndicatorColor = Color.Transparent,
+            unfocusedIndicatorColor = Color.Transparent
+        ),
+        modifier = modifier
+            .fillMaxWidth()
+            .heightIn(40.dp)
+    )
 }
 
 @Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
@@ -164,44 +214,46 @@ fun TabBarPreview() {
         TabBar()
     }
 }
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun SearchBarPreview() {
-//    KodeTheme {
-//        SearchBar()
-//    }
-//}
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun UserElementPreview() {
-//    KodeTheme {
-//        UserElement(Person.mock())
-//    }
-//}
-//
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun UserRowPreview() {
-//    KodeTheme {
-//        UserRow()
-//    }
-//}
 
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun UserScreenPreview() {
-//    KodeTheme {
-//        UserScreen()
-//    }
-//}
-//
-//@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
-//@Composable
-//fun PeopleScreenContentPreview() {
-//    KodeTheme {
-//        PeopleScreen()
-//    }
-//}
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun SearchBarPreview() {
+    KodeTheme {
+        SearchBar(modifier = Modifier.padding(8.dp))
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun UserElementPreview() {
+    KodeTheme {
+        UserElement(Person.mock())
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
+@Composable
+fun UserRowPreview() {
+    KodeTheme {
+        UserRow()
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE, heightDp = 180)
+@Composable
+fun UserScreenPreview() {
+    KodeTheme {
+        UsersContent()
+    }
+}
+
+@Preview(showBackground = true, backgroundColor = 0xFFF5F0EE)
+@Composable
+fun PeopleScreenContentPreview() {
+    KodeTheme {
+        PeopleScreen()
+    }
+}
 
 
 data class Person(
