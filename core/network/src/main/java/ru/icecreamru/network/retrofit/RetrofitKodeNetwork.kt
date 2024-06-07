@@ -1,9 +1,8 @@
 package ru.icecreamru.network.retrofit
 
 import androidx.core.os.trace
-import com.icecreamok.kode.data.model.users.UsersResponse
+import com.icecreamok.kode.data.model.users.NetworkUsersResponse
 import com.jakewharton.retrofit2.converter.kotlinx.serialization.asConverterFactory
-import kotlinx.serialization.Serializable
 import kotlinx.serialization.json.Json
 import okhttp3.Call
 import okhttp3.MediaType.Companion.toMediaType
@@ -18,7 +17,7 @@ import javax.inject.Singleton
 
 interface RetrofitNetworkApi {
     @GET("/users")
-    suspend fun getUsers(@Header("Prefer") preferHeader: String): Response<UsersResponse>
+    suspend fun getUsers(@Header("Prefer") preferHeader: String): Response<NetworkUsersResponse>
 }
 
 // TODO: перенести в BuildConfig
@@ -26,23 +25,23 @@ interface RetrofitNetworkApi {
 private const val KODE_BASE_URL = "https://stoplight.io/mocks/kode-education/trainee-test/25143926/"
 
 
-@Singleton
-internal class RetrofitKodeNetwork @Inject constructor(
-    networkJson: Json,
-    okhttpCallFactory: dagger.Lazy<Call.Factory>
-) : NetworkDataSource {
-    private val networkApi = trace("RetrofitKodeNetwork") {
-        Retrofit.Builder()
-            .baseUrl(KODE_BASE_URL)
-            .callFactory(okhttpCallFactory.get())
-            .addConverterFactory(
-                networkJson.asConverterFactory("application/json".toMediaType()),
-            )
-            .build()
-            .create(RetrofitNetworkApi::class.java)
-
-    }
-
-    override suspend fun getUsers(preferHeader: String): Response<UsersResponse> =
-        networkApi.getUsers(preferHeader)
-}
+//@Singleton
+//internal class RetrofitKodeNetwork @Inject constructor(
+//    networkJson: Json,
+//    okhttpCallFactory: dagger.Lazy<Call.Factory>
+//) : NetworkDataSource {
+//    private val networkApi = trace("RetrofitKodeNetwork") {
+//        Retrofit.Builder()
+//            .baseUrl(KODE_BASE_URL)
+//            .callFactory(okhttpCallFactory.get())
+//            .addConverterFactory(
+//                networkJson.asConverterFactory("application/json".toMediaType()),
+//            )
+//            .build()
+//            .create(RetrofitNetworkApi::class.java)
+//
+//    }
+//
+//    override suspend fun getUsers(preferHeader: String): Response<NetworkUsersResponse> =
+//        networkApi.getUsers(preferHeader)
+//}

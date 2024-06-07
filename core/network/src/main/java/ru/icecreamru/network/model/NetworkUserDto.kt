@@ -1,6 +1,6 @@
 package com.icecreamok.kode.data.model.users
 
-data class UserDto(
+data class NetworkUserDto(
     val avatarUrl: String,
     val birthday: String,
     val department: String,
