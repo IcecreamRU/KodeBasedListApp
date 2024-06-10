@@ -1,0 +1,5 @@
+<resources>
+    <string name="people_error_title">Какой-то сверхразум все сломал</string>
+    <string name="people_error_description">Постараемся быстро починить</string>
+    <string name="people_error_action_repeat">Попробовать снова</string>
+</resources>
