@@ -10,12 +10,11 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
-import androidx.lifecycle.viewmodel.compose.viewModel
 import ru.icecreamru.designsystem.theme.KodeTheme
 
 @Composable
 fun PeopleScreen(
-    peopleViewModel: PeopleViewModel = viewModel()
+    peopleViewModel: PeopleViewModel = hiltViewModel()
 ) {
     KodeTheme {
         Scaffold(

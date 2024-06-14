@@ -1,4 +1,4 @@
-package com.icecreamok.kode.data.model.users
+package ru.icecreamru.network.model
 
 data class NetworkUsersResponse(
     val items: List<NetworkUserDto>

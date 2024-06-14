@@ -2,10 +2,16 @@ package ru.icecreamru.people.main
 
 import androidx.compose.runtime.toMutableStateList
 import androidx.lifecycle.ViewModel
+import dagger.hilt.android.lifecycle.HiltViewModel
+import ru.icecreamru.data.repository.NetworkUsersRepository
 import ru.icecreamru.people.main.model.Page
 import ru.icecreamru.people.main.model.Pages
+import javax.inject.Inject
 
-class PeopleViewModel : ViewModel() {
+@HiltViewModel
+class PeopleViewModel @Inject constructor(
+    private val networkUsersRepository: NetworkUsersRepository
+) : ViewModel() {
     private val peopleData = getMockPeople()
     val sortedPeopleData = peopleData.toMutableStateList()
 

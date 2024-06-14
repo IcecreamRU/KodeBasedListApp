@@ -1,8 +1,7 @@
 package ru.icecreamru.network
 
-import com.icecreamok.kode.data.model.users.NetworkUsersResponse
-import retrofit2.Response
+import ru.icecreamru.network.model.NetworkUsersResponse
 
 interface NetworkDataSource {
-    suspend fun getUsers(preferHeader: String): NetworkUsersResponse
+    suspend fun getUsers(preferHeader: String): NetworkUsersResponse?
 }

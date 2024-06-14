@@ -1,6 +1,6 @@
 package ru.icecreamru.data.model
 
-import com.icecreamok.kode.data.model.users.NetworkUserDto
+import ru.icecreamru.network.model.NetworkUserDto
 
 data class UserDto(
     val avatarUrl: String,

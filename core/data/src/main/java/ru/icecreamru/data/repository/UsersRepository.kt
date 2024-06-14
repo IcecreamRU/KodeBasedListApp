@@ -1,5 +1,6 @@
 package ru.icecreamru.data.repository
 
+import kotlinx.coroutines.flow.Flow
 import ru.icecreamru.data.model.UserDto
 
 
@@ -14,5 +15,5 @@ enum class ExpectedResponse(val header: String) {
 }
 
 interface UsersRepository {
-    suspend fun getUsers(expectedResponse: ExpectedResponse): List<UserDto>
+    suspend fun getUsers(expectedResponse: ExpectedResponse): Flow<List<UserDto>>
 }
